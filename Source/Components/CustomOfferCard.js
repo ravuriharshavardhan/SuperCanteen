@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     marginRight: 6,
   },
   mrp: {
-    fontSize: 11,
+    fontSize: 9,
     color: '#888',
     textDecorationLine: 'line-through',
   },

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -12,7 +12,6 @@ import CustomButton from '../../Components/CustomBotton';
 const STORAGE_KEY = '@address_data';
 
 const CreateAddressScreen = ({ navigation }) => {
-  // Individual field states
   const [name, setName] = useState('');
   const [contact, setContact] = useState('');
   const [flatDetails, setFlatDetails] = useState('');
@@ -30,7 +29,6 @@ const CreateAddressScreen = ({ navigation }) => {
   const states = ['Maharashtra', 'New York', 'California'];
   const pincodes = ['400001', '110001', '10001'];
 
-  // Save address data to AsyncStorage
   const saveAddressData = async () => {
     if (!name || !contact || !flatDetails || !landmark || !city || !state || !pincode || !country) {
       Alert.alert('Validation Error', 'Please fill in all required fields.');
@@ -55,20 +53,16 @@ const CreateAddressScreen = ({ navigation }) => {
       const savedData = await AsyncStorage.getItem(STORAGE_KEY);
       const addresses = savedData ? JSON.parse(savedData) : [];
 
-      // If this is set as default, unset others
       if (isDefault) {
         addresses.forEach(addr => (addr.isDefault = false));
       }
 
       addresses.push(newAddress);
-
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(addresses));
-      Alert.alert('Success', 'Address saved successfully!', [
-        {
-          text: 'OK',
-          onPress: () => navigation.goBack(),
-        },
-      ]);
+      Alert.alert('Success', 'Address saved successfully!', [{
+        text: 'OK',
+        onPress: () => navigation.goBack(),
+      }]);
     } catch (error) {
       Alert.alert('Error', 'Failed to save the address.');
       console.log('Failed to save address to storage', error);
@@ -78,70 +72,32 @@ const CreateAddressScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <CustomCommonHeader title="Add Address" />
-
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionTitle}>Add Address</Text>
 
         <Text style={styles.label}>Name*</Text>
-        <CustomAddressTextInput
-          value={name}
-          onChangeText={setName}
-          placeholder="Enter your name"
-        />
+        <CustomAddressTextInput value={name} onChangeText={setName} placeholder="Enter your name" />
 
         <Text style={styles.label}>Contact*</Text>
-        <CustomAddressTextInput
-          value={contact}
-          onChangeText={setContact}
-          placeholder="Enter contact number"
-          keyboardType="phone-pad"
-        />
+        <CustomAddressTextInput value={contact} onChangeText={setContact} placeholder="Enter contact number" keyboardType="phone-pad" />
 
         <Text style={styles.label}>Country*</Text>
-        <CustomBottomDrop
-          value={country}
-          onChangeText={setCountry}
-          placeholder="Select country"
-          dropdownData={countries}
-        />
+        <CustomBottomDrop value={country} onChangeText={setCountry} placeholder="Select country" dropdownData={countries} />
 
         <Text style={styles.label}>Flat, House No., Building*</Text>
-        <CustomAddressTextInput
-          value={flatDetails}
-          onChangeText={setFlatDetails}
-          placeholder="Enter address details"
-        />
+        <CustomAddressTextInput value={flatDetails} onChangeText={setFlatDetails} placeholder="Enter address details" />
 
         <Text style={styles.label}>Street, Locality, Landmark*</Text>
-        <CustomAddressTextInput
-          value={landmark}
-          onChangeText={setLandmark}
-          placeholder="Enter nearby landmarks"
-        />
+        <CustomAddressTextInput value={landmark} onChangeText={setLandmark} placeholder="Enter nearby landmarks" />
 
         <Text style={styles.label}>City / District*</Text>
-        <CustomBottomDrop
-          value={city}
-          onChangeText={setCity}
-          placeholder="Select city"
-          dropdownData={cities}
-        />
+        <CustomBottomDrop value={city} onChangeText={setCity} placeholder="Select city" dropdownData={cities} />
 
         <Text style={styles.label}>State*</Text>
-        <CustomBottomDrop
-          value={state}
-          onChangeText={setState}
-          placeholder="Select state"
-          dropdownData={states}
-        />
+        <CustomBottomDrop value={state} onChangeText={setState} placeholder="Select state" dropdownData={states} />
 
         <Text style={styles.label}>Pin code*</Text>
-        <CustomBottomDrop
-          value={pincode}
-          onChangeText={setPincode}
-          placeholder="Select pin code"
-          dropdownData={pincodes}
-        />
+        <CustomBottomDrop value={pincode} onChangeText={setPincode} placeholder="Select pin code" dropdownData={pincodes} />
 
         <View style={styles.typeBtnContainer}>
           {addressTypes.map((type) => (
@@ -149,8 +105,8 @@ const CreateAddressScreen = ({ navigation }) => {
               key={type}
               title={type}
               iconName={type === 'Office' ? 'business' : 'home'}
-              width={100}
-              height={38}
+              width={Dimensions.get('window').width / 3.5}
+              height={40}
               onPress={() => setAddressType(type)}
               borderColor={addressType === type ? '#2E6074' : '#ccc'}
               iconColor={addressType === type ? '#2E6074' : '#888'}
@@ -158,15 +114,8 @@ const CreateAddressScreen = ({ navigation }) => {
           ))}
         </View>
 
-        <TouchableOpacity
-          style={styles.defaultContainer}
-          onPress={() => setIsDefault(!isDefault)}
-        >
-          <Icon
-            name={isDefault ? 'check-circle' : 'radio-button-unchecked'}
-            size={20}
-            color={isDefault ? '#2E6074' : '#aaa'}
-          />
+        <TouchableOpacity style={styles.defaultContainer} onPress={() => setIsDefault(!isDefault)}>
+          <Icon name={isDefault ? 'check-circle' : 'radio-button-unchecked'} size={20} color={isDefault ? '#2E6074' : '#aaa'} />
           <Text style={styles.defaultText}>Use as default address</Text>
         </TouchableOpacity>
 
@@ -185,7 +134,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     paddingHorizontal: 20,
-    paddingBottom: 40,
+    paddingBottom: 60,
   },
   sectionTitle: {
     fontSize: 18,
@@ -203,14 +152,13 @@ const styles = StyleSheet.create({
   typeBtnContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
-    gap: 10,
     marginTop: 20,
+    marginBottom: 20,
   },
   defaultContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 16,
+    marginBottom: 24,
   },
   defaultText: {
     marginLeft: 8,

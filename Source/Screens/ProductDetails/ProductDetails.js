@@ -95,7 +95,7 @@ import {
   
           <CustomAuthButton
             width={Width(114)}
-            onPress={() => navigation.navigate('Orders')}
+            onPress={() => navigation.navigate('Cart')}
             title="Add to Cart"
             backgroundColor="#FFFFFF"
             br={10}

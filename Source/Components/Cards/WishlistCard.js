@@ -23,7 +23,9 @@ const WishlistCard = ({ data }) => {
       {/* Product Info */}
       <View style={styles.content}>
         <Text style={styles.brand}>{item.brand}</Text>
-        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.title} numberOfLines={2}>
+          {item.title}
+        </Text>
 
         {/* Rating */}
         <View style={styles.ratingRow}>
@@ -38,7 +40,7 @@ const WishlistCard = ({ data }) => {
                     ? 'star-half'
                     : 'star-outline'
                 }
-                size={14}
+                size={13}
                 color="#4CAF50"
               />
             ))}
@@ -63,7 +65,8 @@ const WishlistCard = ({ data }) => {
       keyExtractor={(item, index) => item.id?.toString() || index.toString()}
       numColumns={2}
       contentContainerStyle={styles.listContainer}
-      columnWrapperStyle={{ justifyContent: 'flex-start', gap: 18}}
+      columnWrapperStyle={{ justifyContent: 'space-between' }}
+      showsVerticalScrollIndicator={false}
     />
   );
 };
@@ -72,21 +75,23 @@ export default WishlistCard;
 
 const styles = StyleSheet.create({
   listContainer: {
-    paddingHorizontal: 15,
+    paddingHorizontal: 16,
     paddingBottom: 20,
   },
   card: {
-    width: 162,
-    height: 230,
-    marginLeft: 8,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: '#ccc',
+    width: '48%',
     backgroundColor: '#fff',
-    overflow: 'hidden',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    padding: 10,
     marginBottom: 16,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0.5 },
+    shadowOpacity: 0.05,
+    shadowRadius: 1,
     position: 'relative',
-    padding: 8,
   },
   closeBtn: {
     position: 'absolute',
@@ -99,26 +104,27 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 100,
     resizeMode: 'contain',
-    marginBottom: 8,
+    marginBottom: 10,
+    alignSelf: 'center',
   },
   content: {
     flex: 1,
-    justifyContent: 'space-between',
   },
   brand: {
     fontSize: 13,
     fontWeight: 'bold',
     color: '#000',
+    marginBottom: 4,
   },
   title: {
     fontSize: 12,
     color: '#555',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   ratingRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 10,
   },
   stars: {
     flexDirection: 'row',
@@ -131,17 +137,15 @@ const styles = StyleSheet.create({
   cartButton: {
     borderWidth: 1,
     borderColor: '#2E6074',
-    paddingVertical: 4,
-    borderRadius: 4,
-    marginTop: 4,
-    height:20,
-    width:90,
-    marginHorizontal:50
+    borderRadius: 20,
+    paddingVertical: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
   cartButtonText: {
     color: '#2E6074',
     fontWeight: '600',
-    fontSize: 8,
-    paddingLeft:20
+    fontSize: 11,
   },
 });

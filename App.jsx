@@ -36,6 +36,9 @@ import OrderConfirmFinal from './Source/Screens/Orders/OrderConfirmFinal';
 import CartScreen from './Source/Screens/Orders/CartScreen';
 import WishlistScreen from './Source/Screens/HomeScreen/WishlistScreen';
 import SearchScreen from './Source/Screens/SearchScreen/SearchScreen';
+import CouponsScreen from './Source/Screens/Account/CouponsScreen';
+import PaymentMethodsScreen from './Source/Screens/Account/PaymentMethodsScreen';
+import OffersScreen from './Source/Screens/Account/OffersScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -77,7 +80,7 @@ const BottomTabs = () => {
       })}>
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Categories" component={Categories} />
-      <Tab.Screen name="Orders" component={CartScreen} />
+      <Tab.Screen name="Orders" component={Orders} />
       <Tab.Screen name="Account" component={AccountScreen} />
     </Tab.Navigator>
   );
@@ -88,7 +91,7 @@ const App = () => {
     <GestureHandlerRootView>
       <NavigationContainer>
         <Stack.Navigator
-          initialRouteName="welcome"
+          initialRouteName="Offers"
           screenOptions={{headerShown: false}}>
           <Stack.Screen name="Main" component={BottomTabs} />
           <Stack.Screen name="Fashion" component={FashionScreen} />
@@ -109,7 +112,7 @@ const App = () => {
           <Stack.Screen name="OrderConfirm" component={OrderConfirm} />
           <Stack.Screen name="PaymentConfirmationProcess" component={PaymentConfirmationProcess} />
           <Stack.Screen name="CreateAddressScreen" component={CreateAddressScreen} />
-          <Stack.Screen name="AddressListScreen" component={AddressListScreen} />
+          <Stack.Screen name="AddressList" component={AddressListScreen} />
           <Stack.Screen name="OrderTrack" component={OrderTrackScreen} />
           <Stack.Screen name="Orders" component={Orders} />
           <Stack.Screen name="OrderCancel" component={OrderCancelScreen} />
@@ -120,6 +123,10 @@ const App = () => {
           <Stack.Screen name="OrderConfirmFinal" component={OrderConfirmFinal} />
           <Stack.Screen name="Wishlist" component={WishlistScreen} />
           <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="Categories" component={Categories} />
+          <Stack.Screen name="Coupons" component={CouponsScreen} />
+          <Stack.Screen name="PaymentMethods" component={PaymentMethodsScreen} />
+          <Stack.Screen name="Offers" component={OffersScreen} />
         
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,23 +1,25 @@
 import React, { useEffect } from 'react';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View, Dimensions, SafeAreaView } from 'react-native';
 import CustomCommonHeader from '../../Components/Common/CustomCommonHeader';
 import { useNavigation } from '@react-navigation/native';
+
+const { width } = Dimensions.get('window');
 
 const OrderConfirm = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.navigate('OrderConfirmFinal'); // Ensure this screen is registered in your navigator
+      navigation.navigate('OrderConfirmFinal'); // Make sure this screen exists in your navigator
     }, 1000);
 
-    return () => clearTimeout(timer); // cleanup if component unmounts early
+    return () => clearTimeout(timer);
   }, [navigation]);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
       <CustomCommonHeader title="Order Confirm Page" />
-      <View style={styles.content}>
+      <View style={styles.container}>
         <Text style={styles.title}>Order Placed!</Text>
         <Text style={styles.subtitle}>
           Your order's on its way — and we're already excited for your next visit!
@@ -28,39 +30,41 @@ const OrderConfirm = () => {
           resizeMode="contain"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
 export default OrderConfirm;
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  content: {
+  container: {
     flex: 1,
+    paddingHorizontal: 24,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 24,
   },
   image: {
-    width: 200,
-    height: 200,
-    marginBottom: 24,
+    width: width * 0.6,  // 60% of screen width for responsiveness
+    height: width * 0.6, // keep square aspect ratio
+    marginTop: 24,
+    marginBottom: 32,
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 12,
+    fontSize: 28,
+    fontWeight: '700',
     color: '#216213',
     textAlign: 'center',
+    marginBottom: 16,
   },
   subtitle: {
     fontSize: 16,
     color: '#666',
     textAlign: 'center',
-    paddingHorizontal: 12,
+    paddingHorizontal: 16,
+    lineHeight: 22,
   },
 });

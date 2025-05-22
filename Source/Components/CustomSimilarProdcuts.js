@@ -25,7 +25,7 @@ const CustomSimilarProdcuts = ({ cardHeight = 230, cardWidth = 160, data }) => {
     return (
       <View style={[styles.card, { height: cardHeight, width: cardWidth }]}>
         <Image
-          source={{ uri: item.image }}
+          source={ item.image }
           style={styles.image}
           resizeMode="contain"
         />

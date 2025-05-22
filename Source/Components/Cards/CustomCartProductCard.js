@@ -18,6 +18,34 @@ const CustomCartProductCard = ({
   ExchangeSizetitle = 'Exchange Size',
   ReturnTitle = 'Return',
 }) => {
+  // Build the array of buttons to show dynamically
+  const buttons = [];
+
+  if (enableReorder) {
+    buttons.push({
+      title: Reordertitle,
+      onPress: onCancel,
+    });
+  }
+  if (enableExchangeStyle) {
+    buttons.push({
+      title: ExchangeStyletitle,
+      onPress: onTrack,
+    });
+  }
+  if (enableExchangeSize) {
+    buttons.push({
+      title: ExchangeSizetitle,
+      onPress: onReplace,
+    });
+  }
+  if (enableReturn) {
+    buttons.push({
+      title: ReturnTitle,
+      onPress: onReturn,
+    });
+  }
+
   return (
     <View style={styles.card}>
       <View style={styles.row}>
@@ -39,67 +67,28 @@ const CustomCartProductCard = ({
         </View>
       </View>
 
+      {/* Button Row - dynamic spacing */}
       <View style={styles.buttonRow}>
-        {enableReorder && (
-          <CustomAuthButton
-            width={82}
-            height={32}
-            title={Reordertitle}
-            textStyle={[styles.buttonText, { fontSize: 10 }]}
-            backgroundColor="#fff"
-            onPress={onCancel}
-            borderColor="#2E607426"
-            borderWidth={1}
-            marginLeft={1}
-          />
-        )}
-        {enableExchangeStyle && (
-          <CustomAuthButton
-            width={90}
-            height={32}
-            title={ExchangeStyletitle}
-            textStyle={[styles.buttonText, { fontSize: 10 }]}
-            backgroundColor="#fff"
-            onPress={onTrack}
-            borderColor="#2E607426"
-            marginLeft={1}
-            borderWidth={1}
-          />
-        )}
-        {enableExchangeSize && (
-          <CustomAuthButton
-            width={90}
-            height={32}
-            title={ExchangeSizetitle}
-            textStyle={[styles.buttonText, { fontSize: 10 }]}
-            backgroundColor="#fff"
-            onPress={onReplace}
-            borderColor="#2E607426"
-            borderWidth={1}
-            marginLeft={1}
-          />
-        )}
-        {enableReturn && (
-          <CustomAuthButton
-            width={72}
-            height={32}
-            title={ReturnTitle}
-            textStyle={[styles.buttonText, { fontSize: 10 }]}
-            backgroundColor="#fff"
-            onPress={onReturn}
-            borderColor="#2E607426"
-            borderWidth={1}
-            marginLeft={1}
-          />
-        )}
+        {buttons.map((btn, index) => (
+          <View key={index} style={styles.buttonContainer}>
+            <CustomAuthButton
+              width={'100%'}
+              height={32}
+              title={btn.title}
+              textStyle={styles.buttonText}
+              backgroundColor="#fff"
+              onPress={btn.onPress}
+              borderColor="#2E607426"
+              borderWidth={1}
+            />
+          </View>
+        ))}
       </View>
     </View>
   );
 };
 
 export default CustomCartProductCard;
-
-
 
 const styles = StyleSheet.create({
   card: {
@@ -109,6 +98,7 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '100%',
     marginBottom: 16,
+    backgroundColor: '#fff',
   },
   row: {
     flexDirection: 'row',
@@ -126,7 +116,7 @@ const styles = StyleSheet.create({
   icon: {
     width: 80,
     height: 80,
-   
+    resizeMode: 'contain',
   },
   infoContainer: {
     flex: 1,
@@ -141,6 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#333',
     marginBottom: 4,
+    flexShrink: 1,
   },
   productMeta: {
     fontSize: 13,
@@ -149,14 +140,17 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
-   
-    columnGap:1,
-  
+    justifyContent: 'space-between',
     marginTop: 12,
-
+  },
+  buttonContainer: {
+    flex: 1,
+    marginHorizontal: 4,
   },
   buttonText: {
     color: '#2E6074E8',
-    fontSize: 13,
+    fontSize: 10,
+    fontWeight: '500',
+    textAlign: 'center',
   },
 });

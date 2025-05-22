@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,6 +6,8 @@ import {
   View,
   ScrollView,
 } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import CustomHeader from '../../Components/CustomHeader';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -13,10 +15,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import CustomButton from '../../Components/CustomBotton';
 
 const ProfileScreen = () => {
-  const handlePress = (label) => {
-    console.log(`Pressed ${label}`);
-    // navigation.navigate(label); // Add this if using React Navigation
-  };
+  const navigation = useNavigation();
+
+  const onPressOrder = useCallback(() => {
+    navigation.navigate('Orders');
+  }, [navigation]);
 
   return (
     <ScrollView style={styles.scrollContainer}>
@@ -32,7 +35,7 @@ const ProfileScreen = () => {
             <View style={styles.iconColumn}>
               <TouchableOpacity
                 style={styles.box}
-                onPress={() => handlePress('Orders')}>
+                onPress={onPressOrder}>
                 <Ionicons name="cart-outline" size={24} color="#2E6074E8" />
               </TouchableOpacity>
               <Text style={styles.label}>Orders</Text>
@@ -41,12 +44,8 @@ const ProfileScreen = () => {
             <View style={styles.iconColumn}>
               <TouchableOpacity
                 style={styles.box}
-                onPress={() => handlePress('Wishlist')}>
-                <MaterialIcons
-                  name="favorite-border"
-                  size={24}
-                  color="#2E6074E8"
-                />
+                onPress={() => handleNavigate('Wishlist')}>
+                <MaterialIcons name="favorite-border" size={24} color="#2E6074E8" />
               </TouchableOpacity>
               <Text style={styles.label}>Wishlist</Text>
             </View>
@@ -54,12 +53,8 @@ const ProfileScreen = () => {
             <View style={styles.iconColumn}>
               <TouchableOpacity
                 style={styles.box}
-                onPress={() => handlePress('Coupons')}>
-                <FontAwesome5
-                  name="ticket-alt"
-                  size={22}
-                  color="#2E6074E8"
-                />
+                onPress={() => handleNavigate('Coupons')}>
+                <FontAwesome5 name="ticket-alt" size={22} color="#2E6074E8" />
               </TouchableOpacity>
               <Text style={styles.label}>Coupons</Text>
             </View>
@@ -67,7 +62,7 @@ const ProfileScreen = () => {
             <View style={styles.iconColumn}>
               <TouchableOpacity
                 style={styles.box}
-                onPress={() => handlePress('Help')}>
+                onPress={() => handleNavigate('Help')}>
                 <FontAwesome5 name="headset" size={22} color="#2E6074E8" />
               </TouchableOpacity>
               <Text style={styles.label}>Help</Text>
@@ -78,31 +73,47 @@ const ProfileScreen = () => {
         {/* Account Settings */}
         <View style={[styles.containerBox, styles.sectionBox]}>
           <Text style={styles.sectionHeader}>Account Settings</Text>
-          {[
-            'Personal Information',
-            'Manage Address',
-            'Payment Methods',
-            'Language',
-            'Notifications',
-          ].map((item, index) => (
-            <TouchableOpacity key={index} onPress={() => handlePress(item)}>
-              <View style={styles.settingsRow}>
-                <Text style={styles.label}>{item}</Text>
-                <Ionicons
-                  name="chevron-forward"
-                  size={24}
-                  color="#2E6074E8"
-                />
-              </View>
-            </TouchableOpacity>
-          ))}
+
+          <TouchableOpacity onPress={() => handleNavigate('PersonalInformation')}>
+            <View style={styles.settingsRow}>
+              <Text style={styles.label}>Personal Information</Text>
+              <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('ManageAddress')}>
+            <View style={styles.settingsRow}>
+              <Text style={styles.label}>Manage Address</Text>
+              <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('PaymentMethods')}>
+            <View style={styles.settingsRow}>
+              <Text style={styles.label}>Payment Methods</Text>
+              <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('Language')}>
+            <View style={styles.settingsRow}>
+              <Text style={styles.label}>Language</Text>
+              <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('Notifications')}>
+            <View style={styles.settingsRow}>
+              <Text style={styles.label}>Notifications</Text>
+              <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
+            </View>
+          </TouchableOpacity>
         </View>
 
         {/* Membership Section */}
         <View style={[styles.containerBox, styles.sectionBox]}>
           <Text style={styles.sectionHeader}>Membership and Offers</Text>
-          <TouchableOpacity
-            onPress={() => handlePress('Super Canteen Rewards')}>
+          <TouchableOpacity onPress={() => handleNavigate('Rewards')}>
             <View style={styles.settingsRow}>
               <Text style={styles.label}>Super Canteen Rewards</Text>
               <Ionicons name="chevron-forward" size={24} color="#2E6074E8" />
@@ -112,20 +123,31 @@ const ProfileScreen = () => {
 
         {/* Footer Links */}
         <View style={styles.footerLinks}>
-          {['FAQ', 'ABOUT US', 'TERMS OF USE', 'PRIVACY POLICY'].map(
-            (item, index) => (
-              <TouchableOpacity
-                key={index}
-                onPress={() => handlePress(item)}>
-                <Text style={styles.footerText}>{item}</Text>
-              </TouchableOpacity>
-            ),
-          )}
+          <TouchableOpacity onPress={() => handleNavigate('FAQ')}>
+            <Text style={styles.footerText}>FAQ</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('About')}>
+            <Text style={styles.footerText}>ABOUT US</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('Terms')}>
+            <Text style={styles.footerText}>TERMS OF USE</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNavigate('Privacy')}>
+            <Text style={styles.footerText}>PRIVACY POLICY</Text>
+          </TouchableOpacity>
         </View>
 
-
+        {/* Logout Button */}
         <View style={styles.logoutContainer}>
-         <CustomButton  textColor={'#2E6074E8'}   backgroundColor = '#ffff'label={"Logout"}/>
+          <CustomButton
+            textColor="#2E6074E8"
+            backgroundColor="#fff"
+            label="Logout"
+            onPress={() => console.log('User logged out')}
+          />
         </View>
       </View>
     </ScrollView>
@@ -225,13 +247,7 @@ const styles = StyleSheet.create({
   logoutContainer: {
     paddingHorizontal: 20,
     paddingVertical: 30,
-    alignContent:"center",
-    justifyContent:"center",
-    alignItems:"center",
-  },
-  logoutText: {
-    color: 'red',
-    fontWeight: 'bold',
-    fontSize: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

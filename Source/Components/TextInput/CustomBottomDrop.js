@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import {
-  TextInput,
   StyleSheet,
   View,
   TouchableOpacity,
   FlatList,
   Text,
 } from 'react-native';
-import { Height } from '../../constants/constants';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const CustomBottomDrop = ({ value, onChangeText, placeholder, dropdownData = [] }) => {
@@ -20,18 +18,20 @@ const CustomBottomDrop = ({ value, onChangeText, placeholder, dropdownData = [] 
 
   return (
     <View style={styles.wrapper}>
-      <View style={styles.inputRow}>
-        <TextInput
-          style={styles.input}
-          value={value}
-          onChangeText={onChangeText}
-          placeholder={placeholder}
-          underlineColorAndroid="transparent"
+      <TouchableOpacity
+        style={styles.selector}
+        onPress={() => setShowDropdown(!showDropdown)}
+        activeOpacity={0.7}
+      >
+        <Text style={value ? styles.selectedText : styles.placeholderText}>
+          {value || placeholder}
+        </Text>
+        <Icon
+          name={showDropdown ? 'arrow-drop-up' : 'arrow-drop-down'}
+          size={24}
+          color="#2E6074"
         />
-        <TouchableOpacity onPress={() => setShowDropdown(!showDropdown)}>
-          <Icon name="arrow-drop-down" size={24} color="#000" />
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
 
       {showDropdown && (
         <View style={styles.dropdown}>
@@ -39,10 +39,14 @@ const CustomBottomDrop = ({ value, onChangeText, placeholder, dropdownData = [] 
             data={dropdownData}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
-              <TouchableOpacity onPress={() => handleSelect(item)} style={styles.dropdownItem}>
-                <Text>{item}</Text>
+              <TouchableOpacity
+                onPress={() => handleSelect(item)}
+                style={styles.dropdownItem}
+              >
+                <Text style={styles.dropdownItemText}>{item}</Text>
               </TouchableOpacity>
             )}
+            nestedScrollEnabled
           />
         </View>
       )}
@@ -52,31 +56,45 @@ const CustomBottomDrop = ({ value, onChangeText, placeholder, dropdownData = [] 
 
 const styles = StyleSheet.create({
   wrapper: {
-    width:"100%"  ,
-   
+    width: '100%',
+    marginTop: 8,
+    zIndex: 1,
   },
-  inputRow: {
+  selector: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-    paddingVertical: 8,
+    borderColor: '#ccc',
+    paddingVertical: 12,
     paddingHorizontal: 4,
   },
-  input: {
-    flex: 1,
+  placeholderText: {
+    color: '#888',
+    fontSize: 14,
+  },
+  selectedText: {
+    color: '#2E6074',
+    fontSize: 14,
   },
   dropdown: {
     backgroundColor: '#fff',
+    borderRadius: 6,
     borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 4,
-    marginTop: 4,
-    elevation: 3,
-    zIndex: 10,
+    borderColor: '#ccc',
+    marginTop: 6,
+    maxHeight: 180,
+    elevation: 4,
   },
   dropdownItem: {
-    padding: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderBottomWidth: 1,
+    borderColor: '#f1f1f1',
+  },
+  dropdownItemText: {
+    fontSize: 14,
+    color: '#333',
   },
 });
 

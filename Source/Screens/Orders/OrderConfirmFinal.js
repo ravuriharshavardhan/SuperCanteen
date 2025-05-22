@@ -6,26 +6,21 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CustomCommonHeader from '../../Components/Common/CustomCommonHeader';
 
+const { width } = Dimensions.get('window');
+
 const OrderConfirmPage = () => {
   const navigation = useNavigation();
 
   return (
-    <ScrollView style={styles.container}>
-      {/* Header */}
-      {/* <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Icon name="chevron-back" size={24} color="#000" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Order Confirm Page</Text>
-      </View> */}
-      <CustomCommonHeader title={'Order Confirm Page'}/>
+    <ScrollView style={styles.container} contentContainerStyle={{ paddingBottom: 30 }}>
+      <CustomCommonHeader title={'Order Confirm Page'} />
 
-      {/* Order Placed */}
       <Text style={styles.title}>Order Placed!</Text>
 
       {/* Delivery Address */}
@@ -33,7 +28,7 @@ const OrderConfirmPage = () => {
       <View style={styles.addressCard}>
         <View style={styles.addressRow}>
           <Icon name="location-outline" size={20} color="#2E6074" />
-          <View style={{ marginLeft: 8 }}>
+          <View style={{ marginLeft: 8, flex: 1 }}>
             <Text style={styles.addressName}>Apoorva Gaur</Text>
             <Text style={styles.addressDetails}>
               23B, Maple Residency, Sector 45, Near Green Park Metro Station,
@@ -44,32 +39,35 @@ const OrderConfirmPage = () => {
       </View>
 
       {/* Your Items */}
-      <Text style={styles.sectionTitle}>YOUR ITEMS</Text>
+      <Text style={styles.sectionTitle}>Your Items</Text>
       <View style={styles.itemCard}>
         <Image
           source={require('../../../assets/Icons/Op.png')}
           style={styles.productImage}
+          resizeMode="contain"
         />
         <View style={styles.itemInfo}>
           <Text style={styles.itemBrand}>Timex</Text>
           <Text style={styles.itemDesc}>Bella Analog Watch for Womens</Text>
           <Text style={styles.itemDelivery}>Free delivery by 24th May</Text>
           <Text style={styles.itemPrice}>₹4,889</Text>
-          <Text style={styles.viewDetails}>View Order Details</Text>
+          <TouchableOpacity>
+            <Text style={styles.viewDetails}>View Order Details</Text>
+          </TouchableOpacity>
         </View>
       </View>
 
       {/* Notification Prompt */}
-      <View style={[styles.notificationContainer, { flexDirection: 'row', alignItems: 'center' }]}>
-  <Text style={styles.notificationText}>
-    Turn ON notifications to receive your order updates!
-  </Text>
-  <Image
-    source={require('../../../assets/Icons/Notification.png')}
-    style={styles.notificationImage}
-  />
-</View>
-
+      <View style={styles.notificationContainer}>
+        <Text style={styles.notificationText}>
+          Turn ON notifications to receive your order updates!
+        </Text>
+        <Image
+          source={require('../../../assets/Icons/Notification.png')}
+          style={styles.notificationImage}
+          resizeMode="contain"
+        />
+      </View>
 
       {/* Thank You Section */}
       <View style={styles.thankYouContainer}>
@@ -77,11 +75,12 @@ const OrderConfirmPage = () => {
           Thank you for your purchase — we look forward to seeing you again soon.
         </Text>
         <Image
-  source={require('../../../assets/Icons/Bag.png')}
-  style={[styles.thankYouImage, { transform: [{ rotate: '45deg' }] }]}
-/>
+          source={require('../../../assets/Icons/Bag.png')}
+          style={[styles.thankYouImage, { transform: [{ rotate: '45deg' }] }]}
+          resizeMode="contain"
+        />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Main')}>
           <Text style={styles.buttonText}>Continue Shopping</Text>
         </TouchableOpacity>
       </View>
@@ -95,38 +94,28 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  headerText: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginLeft: 8,
+    paddingHorizontal: 16,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
     textAlign: 'center',
-    marginVertical: 16,
+    marginVertical: 20,
+    color: '#216213',
   },
   sectionTitle: {
     color: '#2E6074',
-    fontWeight: '600',
+    fontWeight: '700',
+    fontSize: 16,
     marginBottom: 8,
-    fontSize: 14,
   },
   addressCard: {
     backgroundColor: '#fff',
     borderRadius: 14,
     padding: 12,
     marginBottom: 20,
-    borderWidth:0.5,
-    borderColor:'gray'
-
+    borderWidth: 0.5,
+    borderColor: 'gray',
   },
   addressRow: {
     flexDirection: 'row',
@@ -135,22 +124,24 @@ const styles = StyleSheet.create({
   addressName: {
     fontWeight: '700',
     marginBottom: 4,
+    fontSize: 15,
   },
   addressDetails: {
     fontSize: 13,
     color: '#333',
+    lineHeight: 18,
   },
   itemCard: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
+    backgroundColor: '#fdfdfd',
     borderRadius: 10,
     padding: 12,
     marginBottom: 24,
     elevation: 1,
   },
   productImage: {
-    width: 80,
-    height: 80,
+    width: width * 0.25,
+    height: width * 0.25,
     borderRadius: 8,
     marginRight: 12,
   },
@@ -160,7 +151,7 @@ const styles = StyleSheet.create({
   },
   itemBrand: {
     fontWeight: '700',
-    fontSize: 15,
+    fontSize: 16,
     marginBottom: 2,
   },
   itemDesc: {
@@ -185,23 +176,25 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   notificationContainer: {
-
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 40,
-  flexDirection:"row"
-
+    flexWrap: 'wrap',
   },
   notificationText: {
     fontWeight: '600',
     fontSize: 15,
-    width:210,
-    marginBottom: 12,
+    width: width * 0.5,
+    color: '#333',
   },
   notificationImage: {
-    width: 160,
-    height: 120,
+    width: width * 0.35,
+    height: width * 0.3,
   },
   thankYouContainer: {
     alignItems: 'center',
+    paddingHorizontal: 20,
     marginBottom: 30,
   },
   thankYouText: {
@@ -209,22 +202,23 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     marginBottom: 16,
-    paddingHorizontal: 20,
   },
   thankYouImage: {
     width: 100,
     height: 100,
-    marginBottom: 40,
+    marginBottom: 30,
   },
   button: {
     borderWidth: 1,
     borderColor: '#000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 6,
+    borderRadius: 8,
+    backgroundColor: '#f8f8f8',
   },
   buttonText: {
     fontWeight: '600',
     fontSize: 15,
+    color: '#000',
   },
 });

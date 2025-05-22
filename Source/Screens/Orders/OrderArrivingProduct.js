@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import CustomCommonHeader from '../../Components/Common/CustomCommonHeader';
 import CustomCartProductCard from '../../Components/Cards/CustomCartProductCard';
 import CustomSimilarProdcuts from '../../Components/CustomSimilarProdcuts';
@@ -15,14 +14,18 @@ const OrderArrivingProduct = () => {
       {/* Order ID & Product */}
       <View style={styles.section}>
         <Text style={styles.orderIdText}>ORDER ID: #A1827873463667378</Text>
-        <View >
-        <CustomCartProductCard  ExchangeStyletitle='Cancel'  ReturnTitle='Track' Reordertitle='c' ExchangeSizetitle='w' enableExchangeSize={false} enableReorder={false}  label={'Arriving on 22nd May'} />
-
+        <View style={styles.productCardWrapper}>
+          <CustomCartProductCard
+            ExchangeStyletitle="Cancel"
+            ReturnTitle="Track"
+            Reordertitle="Reorder"
+            ExchangeSizetitle="Size"
+            enableExchangeSize={false}
+            enableReorder={false}
+            label={'Arriving on 22nd May'}
+          />
         </View>
-
       </View>
-
-  
 
       {/* Similar Products */}
       <View style={styles.section}>
@@ -32,7 +35,7 @@ const OrderArrivingProduct = () => {
 
       {/* Order Price Summary */}
       <View style={styles.priceDetailsSection}>
-        <OrderPriceDetails enableCOD={true} enableInvoice={true}/>
+        <OrderPriceDetails enableCOD={true} enableInvoice={true} />
       </View>
     </ScrollView>
   );
@@ -47,41 +50,22 @@ const styles = StyleSheet.create({
   },
   section: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingVertical: 20,
     backgroundColor: '#fff',
   },
   orderIdText: {
     color: 'gray',
     fontWeight: '700',
     fontSize: 13,
-    marginBottom: 10,
+    marginBottom: 16,
   },
-  feedbackContainer: {
-    paddingHorizontal: 16,
-    paddingTop: 10,
-    paddingBottom: 10,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: '#eee',
-  },
-  feedbackText: {
-    fontSize: 15,
-    color: '#333',
-    marginBottom: 10,
-    fontWeight: '600',
-  },
-  starRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  starIcon: {
-    marginRight: 8,
+  productCardWrapper: {
+    marginBottom: 20,
   },
   similarText: {
     fontSize: 16,
     fontWeight: '600',
-    marginBottom: 10,
+    marginBottom: 12,
     color: '#222',
   },
   priceDetailsSection: {

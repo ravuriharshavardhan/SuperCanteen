@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextInput, StyleSheet, View } from 'react-native';
-import { Height, Width } from '../../constants/constants';
 
 const CustomAddressTextInput = ({ value, onChangeText, placeholder }) => {
   return (
@@ -10,7 +9,8 @@ const CustomAddressTextInput = ({ value, onChangeText, placeholder }) => {
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        underlineColorAndroid="transparent" // For Android to remove default underline
+        placeholderTextColor="#888"
+        underlineColorAndroid="transparent"
       />
     </View>
   );
@@ -18,15 +18,17 @@ const CustomAddressTextInput = ({ value, onChangeText, placeholder }) => {
 
 const styles = StyleSheet.create({
   container: {
-    // optional wrapper styles
+    width: '100%',
+    marginTop: 4,
   },
   input: {
+    width: '100%',
+    fontSize: 14,
+    paddingVertical: 10,
+    paddingHorizontal: 8,
     borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0', // or any color you want
-    paddingVertical: 8,         // optional for spacing
-    paddingHorizontal: 4,    
-    width:"100%"  ,
- 
+    borderBottomColor: '#E0E0E0',
+    color: '#333',
   },
 });
 
