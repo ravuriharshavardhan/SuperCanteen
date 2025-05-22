@@ -82,6 +82,9 @@ const BottomTabs = () => {
       <Tab.Screen name="Categories" component={Categories} />
       <Tab.Screen name="Orders" component={Orders} />
       <Tab.Screen name="Account" component={AccountScreen} />
+
+
+      
     </Tab.Navigator>
   );
 };
